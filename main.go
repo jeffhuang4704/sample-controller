@@ -45,11 +45,20 @@ func main() {
 	ctx := signals.SetupSignalHandler()
 	logger := klog.FromContext(ctx)
 
-	cfg, err := clientcmd.BuildConfigFromFlags(masterURL, kubeconfig)
-	if err != nil {
-		logger.Error(err, "Error building kubeconfig")
-		klog.FlushAndExit(klog.ExitFlushTimeout, 1)
-	}
+	//cfg, err := clientcmd.BuildConfigFromFlags(masterURL, kubeconfig)
+	//if err != nil {
+	//	logger.Error(err, "Error building kubeconfig")
+	//	klog.FlushAndExit(klog.ExitFlushTimeout, 1)
+	//}
+	home, err := os.UserHomeDir()
+   	if err != nil {
+     		panic(err)
+   	}
+
+   	cfg, err := clientcmd.BuildConfigFromFlags("", path.Join(home, ".kube/config"))
+   	if err != nil {
+     		panic(err.Error())
+   	}
 
 	kubeClient, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
