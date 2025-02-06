@@ -19,6 +19,8 @@ package main
 import (
 	"flag"
 	"time"
+	"os"
+	"path"
 
 	kubeinformers "k8s.io/client-go/informers"
 	"k8s.io/client-go/kubernetes"
